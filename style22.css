@@ -1,4 +1,3 @@
-/* Base background */
 body {
   margin: 0;
   padding: 0;
@@ -10,102 +9,105 @@ body {
   justify-content: center;
 }
 
-/* Container */
-.container {
-  width: 100%;
-  max-width: 400px;
-}
-
-/* Neumorphic weather card */
-.weather-card {
-  background: #e0e5ec;
-  border-radius: 20px;
-  padding: 30px;
+/* Main Container */
+.con {
+  width: 320px;
+  padding: 30px 20px;
+  background: #ffffff;
+  border-radius: 25px;
+  box-shadow:
+    10px 10px 25px rgba(0, 0, 0, 0.1),
+    -10px -10px 25px rgba(255, 255, 255, 0.9);
   color: #333;
-  box-shadow: 8px 8px 15px #a3b1c6, -8px -8px 15px #ffffff;
   text-align: center;
+  transition: box-shadow 0.3s ease;
 }
 
-/* Search bar */
-.search-bar {
+.con:hover {
+  box-shadow:
+    12px 12px 30px rgba(0, 0, 0, 0.15),
+    -12px -12px 30px rgba(255, 255, 255, 1);
+}
+
+/* Search Bar */
+.search {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
 
-/* Input with soft inset style */
 .inp {
+  width: 70%;
   padding: 10px 15px;
   border-radius: 20px 0 0 20px;
   border: none;
-  width: 70%;
   font-size: 16px;
   outline: none;
-  background: #e0e5ec;
-  box-shadow: inset 4px 4px 6px #c1c9d6, inset -4px -4px 6px #ffffff;
+  background: #ffffff;
+  box-shadow:
+    inset 4px 4px 6px rgba(0, 0, 0, 0.1),
+    inset -4px -4px 6px rgba(255, 255, 255, 0.7);
 }
 
-/* Button with neumorphic press effect */
 .btn {
-  border: none;
   padding: 0 20px;
-  font-size: 16px;
+  border: none;
+  font-size: 18px;
   border-radius: 0 20px 20px 0;
-  background: #e0e5ec;
-  color: #444;
+  background: #ffffff;
+  color: #333;
   cursor: pointer;
-  box-shadow: 4px 4px 6px #a3b1c6, -4px -4px 6px #ffffff;
-  transition: all 0.2s ease-in-out;
+  box-shadow:
+    4px 4px 6px rgba(0, 0, 0, 0.1),
+    -4px -4px 6px rgba(255, 255, 255, 0.7);
+  transition: 0.2s ease;
 }
 
 .btn:active {
-  box-shadow: inset 4px 4px 6px #a3b1c6, inset -4px -4px 6px #ffffff;
+  box-shadow:
+    inset 4px 4px 6px rgba(0, 0, 0, 0.1),
+    inset -4px -4px 6px rgba(255, 255, 255, 0.7);
 }
 
-/* Weather icon */
-.weather-icon img {
+/* Icon */
+.ico img {
   width: 100px;
   margin-top: 10px;
   filter: drop-shadow(2px 2px 4px #ccc);
 }
 
-/* Description */
-.description {
-  text-transform: capitalize;
-  font-size: 18px;
+/* Temperature */
+.tp {
+  font-size: 42px;
+  font-weight: bold;
   margin-top: 10px;
 }
 
-/* Temperature */
-.temperature {
-  font-size: 42px;
-  font-weight: bold;
-  margin: 20px 0;
-  color: #111;
+.dis {
+  font-size: 20px;
+  margin-top: 8px;
+  text-transform: capitalize;
 }
 
-/* Extra info section */
-.extra-info p {
-  margin: 10px 0;
+/* City and Country */
+.ctco {
+  font-size: 20px;
+  margin-top: 5px;
+}
+
+/* Min/Max */
+.mx {
+  font-size: 18px;
+  margin-top: 8px;
+}
+
+/* Humidity & Pressure */
+.humpre {
+  margin-top: 20px;
   font-size: 16px;
-  color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.extra-info i {
-  margin-right: 8px;
-  color: #555;
-}
-
-/* City and country */
-.city {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.country {
-  font-size: 16px;
-  color: #666;
+.humpre i {
+  margin-right: 6px;
+  color: #888;
 }
