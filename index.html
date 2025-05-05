@@ -1,88 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neumorphic Weather App</title>
-
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-  <!-- jQuery -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
+  <link rel="stylesheet" href="style22.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="style22.css">
 </head>
 <body>
+  <div class="container">
+    <div class="weather-card glass">
+      <div class="search-bar">
+        <input type="search" class="inp" placeholder="Enter City Name">
+        <button class="btn"><i class="fa fa-search"></i></button>
+      </div>
 
-  <div class="con">
-    <div class="search">
-      <input type="search" class="inp" placeholder="Enter City Name">
-      <button class="btn"><i class="fas fa-search"></i></button>
-    </div>
+      <div class="location-info">
+        <h2 class="city">--</h2>
+        <p class="country">--</p>
+      </div>
 
-    <div class="ico">
-      <img class="im" src="" alt="Weather Icon">
-    </div>
+      <div class="weather-icon">
+        <img class="im" src="" alt="Weather Icon" />
+        <div class="description">----</div>
+      </div>
 
-    <div class="tp"><span class="tem">--</span><sup>°C</sup></div>
-    <div class="dis">----</div>
+      <div class="temperature"><span class="tem">--</span><sup>°C</sup></div>
 
-    <div class="ctco">
-      <span class="ct">--</span><span>, </span><span class="co">--</span>
-    </div>
-
-    <div class="mx">
-      <span class="min">--</span><span>°C / </span><span class="max">--</span>°C
-    </div>
-
-    <div class="humpre">
-      <p><i class="fas fa-tint"></i> Humidity: <span class="hum">--</span>%</p>
-      <p><i class="fas fa-tachometer-alt"></i> Pressure: <span class="pre">--</span> hPa</p>
+      <div class="extra-info">
+        <p><i class="fas fa-temperature-low"></i> Min: <span class="min">--</span>°C</p>
+        <p><i class="fas fa-temperature-high"></i> Max: <span class="max">--</span>°C</p>
+        <p><i class="fas fa-wind"></i> Wind: <span class="wind">--</span> m/s</p>
+        <p><i class="fas fa-eye"></i> Visibility: <span class="vis">--</span> m</p>
+        <p><i class="fas fa-tint"></i> Humidity: <span class="hum">--</span>%</p>
+        <p><i class="fas fa-compress-alt"></i> Pressure: <span class="pre">--</span> hPa</p>
+      </div>
     </div>
   </div>
 
-  <!-- JavaScript -->
   <script>
+    const apiKey = "3fee2c5d70b55a6704b6f388aee014a1";
     let isClick = false;
+
+    const updateUI = (data) => {
+      $(".tem").html(data.main.temp);
+      $(".city").html(data.name);
+      $(".country").html(data.sys.country);
+      $(".min").html(data.main.temp_min);
+      $(".max").html(data.main.temp_max);
+      $(".description").html(data.weather[0].description);
+      $(".im").attr("src", `https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`);
+      $(".hum").html(data.main.humidity);
+      $(".pre").html(data.main.pressure);
+      $(".wind").html(data.wind.speed);
+      $(".vis").html(data.visibility);
+    };
 
     $(".btn").click(() => {
       isClick = true;
-
-      $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + $(".inp").val() + "&appid=3fee2c5d70b55a6704b6f388aee014a1&units=metric", (data) => {
-        $(".tem").html(data.main.temp);
-        $(".ct").html(data.name);
-        $(".min").html(data.main.temp_min);
-        $(".max").html(data.main.temp_max);
-        $(".co").html(data.sys.country);
-        $(".dis").html(data.weather[0].description);
-        $(".im").attr("src", "https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png");
-        $(".hum").html(data.main.humidity);
-        $(".pre").html(data.main.pressure);
-      });
+      const city = $(".inp").val();
+      $.getJSON(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`, updateUI);
     });
 
     const success = (position) => {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-
-      $.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=3fee2c5d70b55a6704b6f388aee014a1&units=metric", (data) => {
-        $(".tem").html(data.main.temp);
-        $(".ct").html(data.name);
-        $(".min").html(data.main.temp_min);
-        $(".max").html(data.main.temp_max);
-        $(".co").html(data.sys.country);
-        $(".dis").html(data.weather[0].description);
-        $(".im").attr("src", "https://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png");
-        $(".hum").html(data.main.humidity);
-        $(".pre").html(data.main.pressure);
-      });
+      const { latitude: lat, longitude: lon } = position.coords;
+      $.getJSON(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`, updateUI);
     };
 
-    const error = (err) => {
-      console.error("Geolocation failed:", err);
+    const error = () => {
+      alert("Unable to retrieve your location.");
     };
 
     if (!isClick) {
